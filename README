@@ -1,0 +1,52 @@
+llm-adversarial-research
+
+so basically i got really into how LLMs work after building one from scratch (TinyCodeLM) and now im trying to figure out how they break
+
+like actually break. not just "haha funny jailbreak" but why does it work, what is the model actually doing when it fails
+
+still figuring this out as i go
+
+what im looking at rn
+
+prompt injection is the one im deepest into right now. the basic idea is you hide instructions in the user input and the model just... listens to them instead of the system prompt. sounds dumb but its genuinely hard to defend against. the indirect version (where the model reads from somewhere external that someone already messed with) is way more interesting than the direct one imo
+
+jailbreaking — ok so i read the Wei et al paper "Jailbroken" and it actually changed how i think about this. basically most jailbreaks work because the model is trained to be helpful AND safe and you can set those against each other. or the safety training just never saw that exact input format. once i understood that a lot of random looking jailbreaks started making sense
+
+the GCG suffix attack thing (Zou et al 2023) is probably the most technically interesting one to me. you can find these adversarial suffixes using gradient search that work across different models. its basically the same idea as adding imperceptible noise to fool an image classifier but for LLMs. havent fully wrapped my head around the math yet but its on my list
+
+agentic attacks i havent gone deep on yet. but i built an agentic system myself and i can already see how weird the trust boundaries get when an LLM has actual tool access. Greshake et al has a paper on this
+
+data extraction — Carlini et al showed you can pull actual training data out of GPT-2 word for word. the memorisation thing is something i noticed a bit with TinyCodeLM too on a tiny scale which is what made me want to read this one
+
+papers
+
+
+Zou et al (2023) — Universal and Transferable Adversarial Attacks on Aligned Language Models (the GCG one)
+
+
+Wei et al (2023) — Jailbroken: How Does LLM Safety Training Fail (read this one, genuinely good)
+
+
+Anthropic (2024) — Many-shot Jailbreaking
+
+
+Greshake et al (2023) — the indirect prompt injection in real apps one
+
+
+Carlini et al (2021) — Extracting Training Data from Large Language Models
+
+
+Liu et al (2023) — Prompt Injection Attacks and Defenses (havent started this one yet)
+
+where im at
+
+reading phase mostly. trying to actually understand the landscape before jumping into experiments. plan is to reproduce some of these attacks on llama or mistral once i feel like i have a solid enough picture
+
+no fixed timeline, going at my own pace
+
+why
+
+after building TinyCodeLM i just couldnt stop thinking about this. i understand how these models work from the inside now and the obvious question became — ok so how do you break it
+
+also i think this stuff genuinely matters. models are being used as agents in actual products now and the security side is still really immature. feels worth understanding properly
+
